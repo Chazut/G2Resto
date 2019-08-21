@@ -1,1 +1,19 @@
-<p>signin works!</p>
+<div class="container">
+    <h1 class="mt-5 mb-0 text-center">Connexion</h1>
+    <hr class="mt-0 mb-5 bg-dark">
+    <div class="col-sm-12 col-md-10 col-lg-5 mx-auto">
+        <form [formGroup]="signinForm" (ngSubmit)="onAuth()">
+            <div class="form-group text-center">
+              <label for="email">Adresse email</label>
+              <input type="email" id="email" formControlName="email" class="form-control text-center">
+            </div>
+            <div class="form-group text-center">
+              <label for="password">Mot de passe</label>
+              <input type="password" id="password" formControlName="password" class="form-control text-center">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary mt-4" [disabled]="signinForm.invalid">Connexion</button>
+            </div>
+          </form>
+    </div>
+</div>
