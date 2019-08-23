@@ -18,7 +18,7 @@
         <li class="nav-item">
             <a class="nav-link text-white" href="#">Panier</a>
         </li>
-        <li class="nav-item dropdown">
+        <li *ngIf="loggedAsAdmin" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Administration
             </a>
@@ -38,8 +38,9 @@
       </ul>
       <ul class="nav justify-content-end">
         <form class="form-inline">
-            <button class="btn btn-light text-dark mr-sm-2" type="button" routerLink="/connexion">Connexion</button>
-            <button class="btn btn-light text-dark" type="button">Inscription</button>
+            <button *ngIf="logged==false" class="btn btn-light text-dark mr-sm-2" type="button" routerLink="/connexion">Connexion</button>
+            <button *ngIf="logged" class="btn btn-light text-dark mr-sm-2" type="button" (click)="onSignout()" >Déconnexion</button>
+            <button *ngIf="logged==false" class="btn btn-light text-dark" type="button">Inscription</button>
         </form>
        </ul>
     </div>
