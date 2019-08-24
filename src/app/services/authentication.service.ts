@@ -14,7 +14,6 @@ export class AuthenticationService {
         firebase.auth().signInWithEmailAndPassword(email, password).then(
           () => {
             resolve();
-            console.log('Connecté');
           },
           (error) => { reject(error);}
         );

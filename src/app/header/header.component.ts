@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as firebase from 'firebase';
 import { AuthenticationService } from '../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnInit {
   logged: boolean;
   loggedAsAdmin: boolean;
 
-  constructor(private authentificationService: AuthenticationService) { }
+  constructor(private authentificationService: AuthenticationService, private router: Router) { }
 
   ngOnInit() {
     firebase.auth().onAuthStateChanged(
@@ -33,6 +34,9 @@ export class HeaderComponent implements OnInit {
 
   onSignout() {
     this.authentificationService.signout();
+    this.loggedAsAdmin = false;
+    this.logged = false;
+    this.router.navigate(['']);
   }
 
 }
