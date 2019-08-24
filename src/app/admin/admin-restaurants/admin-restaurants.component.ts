@@ -22,6 +22,7 @@ export class AdminRestaurantsComponent implements OnInit {
   initForm(){
     this.restaurantForm = this.formBuilder.group({
       nom: ['', Validators.required],
+      adresse: ['', Validators.required],
       telephone: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/[0-9]{10,10}/)]],
       description: ['']
     })
@@ -29,9 +30,10 @@ export class AdminRestaurantsComponent implements OnInit {
 
   onSave(){
     const nom = this.restaurantForm.get('nom').value;
+    const adresse = this.restaurantForm.get('adresse').value;
     const telephone = this.restaurantForm.get('telephone').value;
     const description = this.restaurantForm.get('description').value;
-    const newRestaurant = new Restaurant(nom, telephone, description);
+    const newRestaurant = new Restaurant(nom, adresse, telephone, description);
     this.restaurantService.createRestaurant(newRestaurant);
     $('#restaurantModal').modal('hide');
     this.restaurantForm.reset();
