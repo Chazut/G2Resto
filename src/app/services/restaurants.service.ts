@@ -57,4 +57,38 @@ export class RestaurantsService {
     firebase.database().ref('/restaurants/' + id).update(restaurant); 
   }
 
+  uploadFile(file: File){
+    return new Promise(
+      (resolve, reject) => {
+        const upload = firebase.storage().ref().child('img/restaurants/' + file.name).put(file);
+        upload.on(firebase.storage.TaskEvent.STATE_CHANGED,
+          () => {
+          },
+          (error) => {
+            console.log('Error: ' + error);
+            reject();
+          },
+          () => {
+            upload.snapshot.ref.getDownloadURL().then(function(downloadURL){
+              resolve(downloadURL);
+            })
+          });
+      }
+    );
+  }
+
+  removeFile(link: string){
+    if(link){
+      const storageRef = firebase.storage().refFromURL(link);
+      storageRef.delete().then(
+        () => {
+        }
+      ).catch(
+        (error) => {
+          console.log("file not found: " + error);
+        }
+      );
+    }
+  }
+
 }

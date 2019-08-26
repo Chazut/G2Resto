@@ -16,6 +16,9 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
   restaurantSubscription: Subscription;
   restaurants: Restaurant[];
   editRestaurant: boolean = false;
+  fileUploading: boolean = false;
+  fileUploaded: boolean = false;
+  fileURL: string;
 
   constructor(private formBuilder: FormBuilder, private restaurantService: RestaurantsService) { }
 
@@ -46,6 +49,8 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
   resetForm(){
     this.editRestaurant = false;
     this.restaurantForm.reset();
+    this.fileUploaded = false;
+    this.fileUploading = false;
   }
 
   onSave(){
@@ -55,6 +60,9 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
     const telephone = this.restaurantForm.get('telephone').value;
     const description = this.restaurantForm.get('description').value;
     const newRestaurant = new Restaurant(nom, adresse, telephone, description);
+    if(this.fileURL && this.fileURL != ''){
+      newRestaurant.img = this.fileURL;
+    }
     if(this.editRestaurant){
       this.restaurantService.updateRestaurant(newRestaurant, id);
     } else {
@@ -66,6 +74,9 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
 
   onDelete(restaurant: Restaurant){
     this.restaurantService.removeRestaurant(restaurant);
+    if(restaurant.img){
+      this.restaurantService.removeFile(restaurant.img);
+    }
   }
 
   onEdit(restaurant: Restaurant, id: number){
@@ -76,6 +87,17 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
     this.restaurantForm.get('telephone').setValue(restaurant.telephone);
     this.restaurantForm.get('description').setValue(restaurant.description);
     this.editRestaurant = true;
+  }
+
+  detectFile(event){
+    this.fileUploading = true;
+    this.restaurantService.uploadFile(event.target.files[0]).then(
+      (url: string) => {
+        this.fileURL = url;
+        this.fileUploaded = true;
+        this.fileUploading = false;
+      }
+    );
   }
 
 }

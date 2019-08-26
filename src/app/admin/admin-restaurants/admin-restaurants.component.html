@@ -11,10 +11,18 @@
     <div class="row">
         <div *ngFor="let restaurant of restaurants; let i = index" class="col-12 shadow-sm p-4 mb-3 bg-light">
             <div class="row">
-                <h3 class="font-weight-normal pl-3">{{ restaurant.nom }}</h3>
-                <div class="ml-auto">
-                    <button class="btn btn-primary m-1" (click)="onEdit(restaurant, i)"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-danger m-1" (click)="onDelete(restaurant)"><i class="fas fa-trash-alt"></i></button>
+                <div class="col-md-2">
+                    <img [src]="restaurant.img" alt="Restaurant img" style="width:100px" *ngIf="restaurant.img">
+                    <h4 class="font-weight-light" *ngIf="!restaurant.img">Pas de photo</h4>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <h3 class="font-weight-normal pl-3">{{ restaurant.nom }}</h3>
+                        <div class="ml-auto">
+                            <button class="btn btn-primary m-1" (click)="onEdit(restaurant, i)"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-danger m-1" (click)="onDelete(restaurant)"><i class="fas fa-trash-alt"></i></button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <p>{{ restaurant.adresse }}, {{ restaurant.telephone }}</p>
@@ -39,6 +47,19 @@
                         <input type="text" formControlName="nom" id="nom" placeholder="Nom" class="form-control mb-2">
                         <input type="text" formControlName="adresse" id="adresse" placeholder="Adresse" class="form-control mb-2">
                         <input type="text" formControlName="telephone" id="telephone" placeholder="Numéro de téléphone" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group mb-0">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Ajouter une image</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" id="img" class="custom-file-input" (change)="detectFile($event)" accept="image/*">
+                                <label for="Image" class="custom-file-label">Choisir...</label>
+                            </div>
+                        </div>
+                        <small class="text-warning" *ngIf="fileUploading">Chargerment...</small>
+                        <small class="text-success" *ngIf="fileUploaded">Fichier chargé</small>
                     </div>
                     <div class="form-group">
                         <textarea formControlName="description" id="description" placeholder="Description" class="form-control"></textarea>

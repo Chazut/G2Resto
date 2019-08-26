@@ -14,7 +14,7 @@ export class AppComponent {
       authDomain: "g2resto-2e83d.firebaseapp.com",
       databaseURL: "https://g2resto-2e83d.firebaseio.com",
       projectId: "g2resto-2e83d",
-      storageBucket: "",
+      storageBucket: "gs://g2resto-2e83d.appspot.com/",
       messagingSenderId: "385978229022",
       appId: "1:385978229022:web:58288b2c5b1c1385"
     };
