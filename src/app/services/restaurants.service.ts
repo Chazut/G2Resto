@@ -24,7 +24,16 @@ export class RestaurantsService {
 
   //Méthode de suppression d'un restaurant
   removeRestaurant(restaurant: Restaurant){
-    //TODO
+    const index = this.restaurants.findIndex(
+      (restaurantElement) => {
+        if(restaurantElement == restaurant){
+          return true;
+        }
+      }
+    );
+    this.restaurants.splice(index, 1);
+    this.saveRestaurants();
+    this.emitRestaurants();
   }
 
   //Méthode d'emission des données
@@ -42,6 +51,10 @@ export class RestaurantsService {
       this.restaurants = data.val() ? data.val() : [];
       this.emitRestaurants();
     });
+  }
+
+  updateRestaurant(restaurant: Restaurant, id: number){
+    firebase.database().ref('/restaurants/' + id).update(restaurant); 
   }
 
 }

@@ -15,6 +15,7 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
   restaurantForm: FormGroup;
   restaurantSubscription: Subscription;
   restaurants: Restaurant[];
+  editRestaurant: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private restaurantService: RestaurantsService) { }
 
@@ -34,6 +35,7 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
 
   initForm(){
     this.restaurantForm = this.formBuilder.group({
+      id: [''],
       nom: ['', Validators.required],
       adresse: ['', Validators.required],
       telephone: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/[0-9]{10,10}/)]],
@@ -41,15 +43,39 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
     })
   }
 
+  resetForm(){
+    this.editRestaurant = false;
+    this.restaurantForm.reset();
+  }
+
   onSave(){
+    const id = this.restaurantForm.get('id').value;
     const nom = this.restaurantForm.get('nom').value;
     const adresse = this.restaurantForm.get('adresse').value;
     const telephone = this.restaurantForm.get('telephone').value;
     const description = this.restaurantForm.get('description').value;
     const newRestaurant = new Restaurant(nom, adresse, telephone, description);
-    this.restaurantService.createRestaurant(newRestaurant);
+    if(this.editRestaurant){
+      this.restaurantService.updateRestaurant(newRestaurant, id);
+    } else {
+      this.restaurantService.createRestaurant(newRestaurant);
+    }
     $('#restaurantModal').modal('hide');
-    this.restaurantForm.reset();
+    this.resetForm();
+  }
+
+  onDelete(restaurant: Restaurant){
+    this.restaurantService.removeRestaurant(restaurant);
+  }
+
+  onEdit(restaurant: Restaurant, id: number){
+    $('#restaurantModal').modal('show');
+    this.restaurantForm.get('id').setValue(id);
+    this.restaurantForm.get('nom').setValue(restaurant.nom);
+    this.restaurantForm.get('adresse').setValue(restaurant.adresse);
+    this.restaurantForm.get('telephone').setValue(restaurant.telephone);
+    this.restaurantForm.get('description').setValue(restaurant.description);
+    this.editRestaurant = true;
   }
 
 }
