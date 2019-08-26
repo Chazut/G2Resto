@@ -1,22 +1,35 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RestaurantsService } from 'src/app/services/restaurants.service';
 import { Restaurant } from 'src/app/models/Restaurant.model';
 import * as $ from 'jquery';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admin-restaurants',
   templateUrl: './admin-restaurants.component.html',
   styleUrls: ['./admin-restaurants.component.css']
 })
-export class AdminRestaurantsComponent implements OnInit {
+export class AdminRestaurantsComponent implements OnInit, OnDestroy {
 
   restaurantForm: FormGroup;
+  restaurantSubscription: Subscription;
+  restaurants: Restaurant[];
 
   constructor(private formBuilder: FormBuilder, private restaurantService: RestaurantsService) { }
 
   ngOnInit() {
     this.initForm();
+    this.restaurantSubscription = this.restaurantService.restaurantsSubject.subscribe(
+      (restaurants: Restaurant[]) => {
+        this.restaurants = restaurants;
+      }
+    );
+    this.restaurantService.getRestaurants();
+  }
+
+  ngOnDestroy(){
+    this.restaurantSubscription.unsubscribe();
   }
 
   initForm(){

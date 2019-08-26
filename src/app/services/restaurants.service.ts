@@ -37,4 +37,11 @@ export class RestaurantsService {
     firebase.database().ref('/restaurants').set(this.restaurants);
   }
 
+  getRestaurants(){
+    firebase.database().ref('restaurants').on('value', (data) =>{
+      this.restaurants = data.val() ? data.val() : [];
+      this.emitRestaurants();
+    });
+  }
+
 }

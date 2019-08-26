@@ -1,7 +1,7 @@
 <div class="rounded shadow p-5">
     <div class="row">
         <div class="col-12 d-flex">
-            <h2 class="font-weight-light"><i class="fas fa-utensils"></i> Restaurants</h2>
+            <h2 class="font-weight-normal"><i class="fas fa-utensils"></i> Restaurants</h2>
             <button class="btn btn-primary ml-auto" type="button" data-toggle="modal" data-target="#restaurantModal">
                 <i class="fas fa-plus"></i>
             </button>
@@ -9,7 +9,17 @@
     </div>
     <hr class="mt-1 mb-5 bg-dark">
     <div class="row">
-        
+        <div *ngFor="let restaurant of restaurants" class="col-12 shadow-sm p-4 mb-3 bg-light">
+            <div class="row">
+                <h3 class="font-weight-normal pl-3">{{ restaurant.nom }}</h3>
+                <div class="ml-auto">
+                    <button class="btn btn-primary m-1"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger m-1"><i class="fas fa-trash-alt"></i></button>
+                </div>
+            </div>
+            <p>{{ restaurant.adresse }}, {{ restaurant.telephone }}</p>
+            <p>{{ restaurant.description }}</p>
+        </div>
     </div>
 </div>
 
