@@ -53,6 +53,21 @@ export class RestaurantsService {
     });
   }
 
+  getRestaurant(id: number){
+    return new Promise(
+      (resolve, reject) => {
+        firebase.database().ref('/restaurants/' + id).once('value').then(
+          (data) => {
+            resolve(data.val());
+          },
+          (error) => {
+            reject(error);
+          }
+        );
+      }
+    );
+  }
+
   updateRestaurant(restaurant: Restaurant, id: number){
     firebase.database().ref('/restaurants/' + id).update(restaurant); 
   }

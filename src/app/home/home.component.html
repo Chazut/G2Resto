@@ -12,7 +12,7 @@
                     <small class="pl-3">{{ restaurant.adresse }}, {{ restaurant.telephone }}</small>
                     <p class="pl-3">{{ restaurant.description }}<p>
                     <div class="d-flex">
-                        <button class="btn btn-primary my-3 mx-auto">Voir la carte</button>
+                        <button class="btn btn-primary my-3 mx-auto" (click)="onViewMenu(i)">Voir la carte</button>
                     </div>
                 </div>
             </div>

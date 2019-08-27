@@ -1,0 +1,16 @@
+<div class="container">
+    <h1 class="display-4 mt-5 mb-0">{{ restaurant.nom }}</h1>
+    <hr class="bg-dark mb-4 mt-2">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="w-100 my-auto">
+                <img [src]="restaurant.img" alt="" class="w-100">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <p>{{ restaurant.adresse }}</p>
+            <p>{{ restaurant.telephone }}</p>
+            <p class="font-weight-light">{{ restaurant.description }}</p>
+        </div>
+    </div>
+</div>

@@ -4,11 +4,13 @@ import { SigninComponent } from './signin/signin.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminRestaurantsComponent } from './admin/admin-restaurants/admin-restaurants.component';
 import { HomeComponent } from './home/home.component';
+import { RestaurantMenuComponent } from './restaurant-menu/restaurant-menu.component';
 
 const routes: Routes = [
   { path: 'connexion', component: SigninComponent },
   { path : 'dashboard', component: AdminDashboardComponent },
   { path : 'editRestaurants', component: AdminRestaurantsComponent },
+  { path : 'restaurant/:id', component: RestaurantMenuComponent },
   { path : 'accueil', component: HomeComponent }
 ];
 
