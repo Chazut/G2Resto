@@ -4,6 +4,7 @@
             <h2 class="font-weight-normal"><i class="fas fa-utensils"></i> Restaurants</h2>
             <button class="btn btn-primary ml-auto" type="button" data-toggle="modal" data-target="#restaurantModal" (click)="resetForm()">
                 <i class="fas fa-plus"></i>
+                Créer un restaurant
             </button>
         </div>
     </div>
@@ -21,6 +22,7 @@
                         <div class="ml-auto">
                             <button class="btn btn-primary m-1" type="button" data-toggle="modal" data-target="#platModal" (click)="throwInfos(restaurant, i)">
                                 <i class="fas fa-plus-circle"></i>
+                                Ajouter un plat
                             </button>
                             <button class="btn btn-warning m-1" (click)="onEdit(restaurant, i)"><i class="fas fa-edit"></i></button>
                             <button class="btn btn-danger m-1" (click)="onDelete(restaurant)"><i class="fas fa-trash-alt"></i></button>
@@ -32,7 +34,7 @@
             <p>{{ restaurant.adresse }}, {{ restaurant.telephone }}</p>
             <p>{{ restaurant.description }}</p>
             <div class="row">
-                <div *ngFor="let plat of restaurant.plats" class="col-12 shadow-sm p-4 mb-3 bg-white">
+                <div *ngFor="let plat of restaurant.plats; let ii = index" class="col-12 shadow-sm p-4 mb-3 bg-white">
                     <div class="row">
                         <div class="col-md-2">
                             <img [src]="plat.img" alt="Plat img" style="width:100px" *ngIf="plat.img">
@@ -45,8 +47,8 @@
                                 <div class="ml-auto">
                                     <p class="font-weight-normal m-1 mr-3">{{ plat.prix }} <i class="fas fa-coins"></i></p>
                                 </div>
-                                <button class="btn btn-warning m-1" (click)="onEditPlat(plat, i)"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-danger m-1" (click)="onDeletePlat(restaurant, plat, i)"><i class="fas fa-trash-alt"></i></button>
+                                <button class="btn btn-warning m-1" (click)="onEditPlat(restaurant, i, plat, ii)"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-danger m-1" (click)="onDeletePlat(restaurant, i, plat)"><i class="fas fa-trash-alt"></i></button>
                             </div>
                             <p class="font-weight-light">{{ plat.description }}</p>
                         </div>
@@ -99,7 +101,7 @@
                                 <span class="input-group-text">Ajouter une image</span>
                             </div>
                             <div class="custom-file">
-                                <input type="file" id="img" class="custom-file-input" (change)="detectFile($event)" accept="image/*">
+                                <input type="file" id="img" class="custom-file-input" (change)="detectFile($event, 'restaurants/')" accept="image/*">
                                 <label for="Image" class="custom-file-label">Choisir...</label>
                             </div>
                         </div>
@@ -130,15 +132,16 @@
             </div>
             <div class="modal-body">
                 <form [formGroup]="platForm" (ngSubmit)="onAddingPlat()">
+                    <input type="number" formControlName="id_plat" hidden>
                     <div class="form-group">
                         <input type="text" formControlName="nom_plat" id="nom_plat" placeholder="Nom" class="form-control mb-2">
-                        <input type="number" formControlName="prix" id="prix" class="form-control mb-2">
+                        <input type="number" formControlName="prix" id="prix" placeholder="Prix" class="form-control mb-2">
                     </div>
                     <div class="input group mb-3">
                         <div class="input-group-prepend">
                             <label for="foodtype" class="input-group-text">Type de plat</label>
                             <select formControlName="type_plat" id="type_plat" class="custom-select">
-                                <option value="Entree">Hors d'oeuvre</option>
+                                <option value="Entree">Entrée</option>
                                 <option value="Plat">Plat</option>
                                 <option value="Dessert">Dessert</option>
                                 <option value="Alcool">Alcool</option>
@@ -152,7 +155,7 @@
                                 <span class="input-group-text">Ajouter une image</span>
                             </div>
                             <div class="custom-file">
-                                <input type="file" id="img_plat" class="custom-file-input" (change)="detectFile($event)" accept="image/*">
+                                <input type="file" id="img_plat" class="custom-file-input" (change)="detectFile($event, 'plats/')" accept="image/*">
                                 <label for="Image" class="custom-file-label">Choisir...</label>
                             </div>
                         </div>

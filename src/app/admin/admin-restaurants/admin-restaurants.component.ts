@@ -19,6 +19,7 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
   restaurantSubscription: Subscription;
   restaurants: Restaurant[];
   editRestaurant: boolean = false;
+  editPlat: boolean = false;
   fileUploading: boolean = false;
   fileUploaded: boolean = false;
   fileURL: string;
@@ -51,6 +52,7 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
       description: ['']
     })
     this.platForm = this.formBuilder.group({
+      id_plat: [''],
       nom_plat: ['', Validators.required],
       type_plat: ['', Validators.required],
       prix: ['', Validators.required],
@@ -60,6 +62,7 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
 
   resetForm(){
     this.editRestaurant = false;
+    this.editPlat = false;
     this.restaurantForm.reset();
     this.platForm.reset();
     this.fileUploaded = false;
@@ -86,26 +89,9 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  onDelete(restaurant: Restaurant){
-    this.restaurantService.removeRestaurant(restaurant);
-    if(restaurant.img){
-      this.restaurantService.removeFile(restaurant.img);
-    }
-  }
-
-  onEdit(restaurant: Restaurant, id: number){
-    $('#restaurantModal').modal('show');
-    this.restaurantForm.get('id').setValue(id);
-    this.restaurantForm.get('nom').setValue(restaurant.nom);
-    this.restaurantForm.get('adresse').setValue(restaurant.adresse);
-    this.restaurantForm.get('telephone').setValue(restaurant.telephone);
-    this.restaurantForm.get('foodtype').setValue(restaurant.foodtype);
-    this.restaurantForm.get('description').setValue(restaurant.description);
-    this.editRestaurant = true;
-  }
-
   onAddingPlat(){
     console.log("id given: " + this.currentID);
+    const id_plat = this.platForm.get('id_plat').value;
     const nom_plat = this.platForm.get('nom_plat').value;
     const type_plat = this.platForm.get('type_plat').value;
     const description_plat = this.platForm.get('description_plat').value;
@@ -119,11 +105,54 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
       this.restaurant.plats = plats;
     } else {
       const plats = this.restaurant.plats;
-      plats.push(newPlat);
+      if(this.editPlat){
+        plats[id_plat] = newPlat;
+      } else {
+        plats.push(newPlat);
+      }
       this.restaurant.plats = plats;
     }
-    this.restaurant.hasPlat = true;
     this.restaurantService.updateRestaurant(this.restaurant, this.currentID);
+    $('#platModal').modal('hide');
+    this.resetForm();
+  }
+
+  onDelete(restaurant: Restaurant){
+    this.restaurantService.removeRestaurant(restaurant);
+    if(restaurant.img){
+      this.restaurantService.removeFile(restaurant.img);
+    }
+  }
+
+  onDeletePlat(restaurant: Restaurant, id: number, plat: Plat){
+    this.throwInfos(restaurant, id);
+    const index = this.restaurant.plats.indexOf(plat);
+    if(index > -1){
+      this.restaurant.plats.splice(index, 1);
+    }
+    this.restaurantService.updateRestaurant(this.restaurant, this.currentID);
+  }
+
+  onEdit(restaurant: Restaurant, id: number){
+    $('#restaurantModal').modal('show');
+    this.restaurantForm.get('id').setValue(id);
+    this.restaurantForm.get('nom').setValue(restaurant.nom);
+    this.restaurantForm.get('adresse').setValue(restaurant.adresse);
+    this.restaurantForm.get('telephone').setValue(restaurant.telephone);
+    this.restaurantForm.get('foodtype').setValue(restaurant.foodtype);
+    this.restaurantForm.get('description').setValue(restaurant.description);
+    this.editRestaurant = true;
+  }
+
+  onEditPlat(restaurant: Restaurant, id: number, plat: Plat, id_plat: number){
+    this.throwInfos(restaurant, id);
+    $('#platModal').modal('show');
+    this.platForm.get('id_plat').setValue(id_plat);
+    this.platForm.get('nom_plat').setValue(plat.nom);
+    this.platForm.get('type_plat').setValue(plat.type);
+    this.platForm.get('prix').setValue(plat.prix);
+    this.platForm.get('description_plat').setValue(plat.description);
+    this.editPlat = true;
   }
 
   throwInfos(restaurant: Restaurant, id: number){
@@ -131,9 +160,9 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
     this.currentID = id;
   }
 
-  detectFile(event){
+  detectFile(event, path: string){
     this.fileUploading = true;
-    this.restaurantService.uploadFile(event.target.files[0]).then(
+    this.restaurantService.uploadFile(event.target.files[0], "img/" + path).then(
       (url: string) => {
         this.fileURL = url;
         this.fileUploaded = true;

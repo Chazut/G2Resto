@@ -72,10 +72,10 @@ export class RestaurantsService {
     firebase.database().ref('/restaurants/' + id).update(restaurant); 
   }
 
-  uploadFile(file: File){
+  uploadFile(file: File, path: string){
     return new Promise(
       (resolve, reject) => {
-        const upload = firebase.storage().ref().child('img/restaurants/' + file.name).put(file);
+        const upload = firebase.storage().ref().child(path + file.name).put(file);
         upload.on(firebase.storage.TaskEvent.STATE_CHANGED,
           () => {
           },
