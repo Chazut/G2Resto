@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg shadow navbar-light bg-primary">
-    <a class="navbar-brand text-white" href="#">G2Resto</a>
+    <a class="navbar-brand text-white" routerLink="/accueil">G2Resto</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -7,16 +7,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-            <a class="nav-link text-white" href="#">Accueil</a>
+            <a class="nav-link text-white" routerLink="/accueil">Restaurants</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" href="#">Restaurants</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white" href="#">Mes commandes</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white" href="#">Panier</a>
+            <a class="nav-link text-white" href="#">Ma commande</a>
         </li>
         <li *ngIf="loggedAsAdmin" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -25,8 +19,7 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" routerLink="/dashboard">Tableau de bord</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" routerLink="/addRestaurant">Ajouter/Editer un restaurant</a>
-              <a class="dropdown-item" href="#">Ajouter/Editer une carte</a>
+              <a class="dropdown-item" routerLink="/editRestaurants">Ajouter/Editer un restaurant</a>
               <a class="dropdown-item" href="#">Ajouter/Editer un plat</a>
             </div>
           </li>

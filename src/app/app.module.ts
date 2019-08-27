@@ -8,6 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { SigninComponent } from './signin/signin.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { AdminRestaurantsComponent } from './admin/admin-restaurants/admin-restaurants.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AdminRestaurantsComponent } from './admin/admin-restaurants/admin-resta
     SigninComponent,
     AdminDashboardComponent,
     AdminRestaurantsComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
