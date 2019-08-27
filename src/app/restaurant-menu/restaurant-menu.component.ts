@@ -15,7 +15,7 @@ export class RestaurantMenuComponent implements OnInit {
   constructor(private route: ActivatedRoute, private restaurantsService: RestaurantsService) { }
 
   ngOnInit() {
-    this.restaurant = new Restaurant('','','','');
+    this.restaurant = new Restaurant('','','','', '');
     const id = this.route.snapshot.params['id'];
     this.restaurantsService.getRestaurant(+id).then(
       (restaurant: Restaurant) => {

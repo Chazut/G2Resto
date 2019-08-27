@@ -4,6 +4,7 @@ export class Restaurant {
         public nom: string, 
         public adresse: string, 
         public telephone: string, 
+        public foodtype: string,
         public description: string
     ){}
 }

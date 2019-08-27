@@ -42,6 +42,7 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
       nom: ['', Validators.required],
       adresse: ['', Validators.required],
       telephone: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/[0-9]{10,10}/)]],
+      foodtype: ['', Validators.required],
       description: ['']
     })
   }
@@ -58,8 +59,9 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
     const nom = this.restaurantForm.get('nom').value;
     const adresse = this.restaurantForm.get('adresse').value;
     const telephone = this.restaurantForm.get('telephone').value;
+    const foodtype = this.restaurantForm.get('foodtype').value;
     const description = this.restaurantForm.get('description').value;
-    const newRestaurant = new Restaurant(nom, adresse, telephone, description);
+    const newRestaurant = new Restaurant(nom, adresse, telephone, foodtype, description);
     if(this.fileURL && this.fileURL != ''){
       newRestaurant.img = this.fileURL;
     }
@@ -85,6 +87,7 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
     this.restaurantForm.get('nom').setValue(restaurant.nom);
     this.restaurantForm.get('adresse').setValue(restaurant.adresse);
     this.restaurantForm.get('telephone').setValue(restaurant.telephone);
+    this.restaurantForm.get('foodtype').setValue(restaurant.foodtype);
     this.restaurantForm.get('description').setValue(restaurant.description);
     this.editRestaurant = true;
   }

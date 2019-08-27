@@ -23,6 +23,7 @@
                             <button class="btn btn-danger m-1" (click)="onDelete(restaurant)"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     </div>
+                    <p class="font-weight-normal">{{ restaurant.foodtype }}</p>
                 </div>
             </div>
             <p>{{ restaurant.adresse }}, {{ restaurant.telephone }}</p>
@@ -47,6 +48,25 @@
                         <input type="text" formControlName="nom" id="nom" placeholder="Nom" class="form-control mb-2">
                         <input type="text" formControlName="adresse" id="adresse" placeholder="Adresse" class="form-control mb-2">
                         <input type="text" formControlName="telephone" id="telephone" placeholder="Numéro de téléphone" class="form-control">
+                    </div>
+                    <div class="input group mb-3">
+                        <div class="input-group-prepend">
+                            <label for="foodtype" class="input-group-text">Type de cuisine</label>
+                            <select formControlName="foodtype" id="foodtype" class="custom-select">
+                                <option value="Asiatique">Asiatique</option>
+                                <option value="Baravin">Bar à vin</option>
+                                <option value="Bio">Bio</option>
+                                <option value="Fastfood">Fast Food</option>
+                                <option value="Gastronomique">Gastronomique</option>
+                                <option value="Italien">Italien</option>
+                                <option value="Francais">Français</option>
+                                <option value="Indien">Indien</option>
+                                <option value="Mediterraneen">Méditerranéen</option>
+                                <option value="Mexicain">Mexicain</option>
+                                <option value="Tapas">Tapas</option>
+                                <option value="Traditionnel">Traditionnel</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group mb-0">
