@@ -19,7 +19,10 @@
                     <div class="row">
                         <h3 class="font-weight-normal pl-3">{{ restaurant.nom }}</h3>
                         <div class="ml-auto">
-                            <button class="btn btn-primary m-1" (click)="onEdit(restaurant, i)"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-primary m-1" type="button" data-toggle="modal" data-target="#platModal" (click)="throwInfos(restaurant, i)">
+                                <i class="fas fa-plus-circle"></i>
+                            </button>
+                            <button class="btn btn-warning m-1" (click)="onEdit(restaurant, i)"><i class="fas fa-edit"></i></button>
                             <button class="btn btn-danger m-1" (click)="onDelete(restaurant)"><i class="fas fa-trash-alt"></i></button>
                         </div>
                     </div>
@@ -28,6 +31,28 @@
             </div>
             <p>{{ restaurant.adresse }}, {{ restaurant.telephone }}</p>
             <p>{{ restaurant.description }}</p>
+            <div class="row">
+                <div *ngFor="let plat of restaurant.plats" class="col-12 shadow-sm p-4 mb-3 bg-white">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img [src]="plat.img" alt="Plat img" style="width:100px" *ngIf="plat.img">
+                            <h4 class="font-weight-light" *ngIf="!restaurant.img">Pas de photo</h4>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <p class="font-weight-light pl-3">{{ plat.type }}</p>
+                                <p class="font-weight-normal pl-3">{{ plat.nom }}</p>
+                                <div class="ml-auto">
+                                    <p class="font-weight-normal m-1 mr-3">{{ plat.prix }} <i class="fas fa-coins"></i></p>
+                                </div>
+                                <button class="btn btn-warning m-1" (click)="onEditPlat(plat, i)"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-danger m-1" (click)="onDeletePlat(restaurant, plat, i)"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                            <p class="font-weight-light">{{ plat.description }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -87,6 +112,59 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
                         <button type="submit" [disabled]="restaurantForm.invalid" class="btn btn-primary">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="platModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Nouveau plat</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="platForm" (ngSubmit)="onAddingPlat()">
+                    <div class="form-group">
+                        <input type="text" formControlName="nom_plat" id="nom_plat" placeholder="Nom" class="form-control mb-2">
+                        <input type="number" formControlName="prix" id="prix" class="form-control mb-2">
+                    </div>
+                    <div class="input group mb-3">
+                        <div class="input-group-prepend">
+                            <label for="foodtype" class="input-group-text">Type de plat</label>
+                            <select formControlName="type_plat" id="type_plat" class="custom-select">
+                                <option value="Entree">Hors d'oeuvre</option>
+                                <option value="Plat">Plat</option>
+                                <option value="Dessert">Dessert</option>
+                                <option value="Alcool">Alcool</option>
+                                <option value="Boisson">Boisson</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group mb-0">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Ajouter une image</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" id="img_plat" class="custom-file-input" (change)="detectFile($event)" accept="image/*">
+                                <label for="Image" class="custom-file-label">Choisir...</label>
+                            </div>
+                        </div>
+                        <small class="text-warning" *ngIf="fileUploading">Chargerment...</small>
+                        <small class="text-success" *ngIf="fileUploaded">Fichier chargé</small>
+                    </div>
+                    <div class="form-group">
+                        <textarea formControlName="description_plat" id="description_plat" placeholder="Description" class="form-control"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        <button type="submit" [disabled]="platForm.invalid" class="btn btn-primary">Enregistrer</button>
                     </div>
                 </form>
             </div>

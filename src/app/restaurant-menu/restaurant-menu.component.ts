@@ -19,7 +19,7 @@ export class RestaurantMenuComponent implements OnInit {
     const id = this.route.snapshot.params['id'];
     this.restaurantsService.getRestaurant(+id).then(
       (restaurant: Restaurant) => {
-        this.restaurant = restaurant;
+        this.restaurant = restaurant; 
       }
     );
   }

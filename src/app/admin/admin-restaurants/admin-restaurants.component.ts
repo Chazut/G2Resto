@@ -4,6 +4,8 @@ import { RestaurantsService } from 'src/app/services/restaurants.service';
 import { Restaurant } from 'src/app/models/Restaurant.model';
 import * as $ from 'jquery';
 import { Subscription } from 'rxjs';
+import { Plat } from 'src/app/models/Plat.model';
+import { areAllEquivalent } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-admin-restaurants',
@@ -13,12 +15,15 @@ import { Subscription } from 'rxjs';
 export class AdminRestaurantsComponent implements OnInit, OnDestroy {
 
   restaurantForm: FormGroup;
+  platForm: FormGroup;
   restaurantSubscription: Subscription;
   restaurants: Restaurant[];
   editRestaurant: boolean = false;
   fileUploading: boolean = false;
   fileUploaded: boolean = false;
   fileURL: string;
+  currentID: number;
+  restaurant: Restaurant;
 
   constructor(private formBuilder: FormBuilder, private restaurantService: RestaurantsService) { }
 
@@ -45,11 +50,18 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
       foodtype: ['', Validators.required],
       description: ['']
     })
+    this.platForm = this.formBuilder.group({
+      nom_plat: ['', Validators.required],
+      type_plat: ['', Validators.required],
+      prix: ['', Validators.required],
+      description_plat: ['']
+    })
   }
 
   resetForm(){
     this.editRestaurant = false;
     this.restaurantForm.reset();
+    this.platForm.reset();
     this.fileUploaded = false;
     this.fileUploading = false;
   }
@@ -90,6 +102,33 @@ export class AdminRestaurantsComponent implements OnInit, OnDestroy {
     this.restaurantForm.get('foodtype').setValue(restaurant.foodtype);
     this.restaurantForm.get('description').setValue(restaurant.description);
     this.editRestaurant = true;
+  }
+
+  onAddingPlat(){
+    console.log("id given: " + this.currentID);
+    const nom_plat = this.platForm.get('nom_plat').value;
+    const type_plat = this.platForm.get('type_plat').value;
+    const description_plat = this.platForm.get('description_plat').value;
+    const prix = this.platForm.get('prix').value;
+    const newPlat = new Plat(nom_plat, type_plat, description_plat, prix);
+    if(this.fileURL && this.fileURL != ''){
+      newPlat.img = this.fileURL;
+    }
+    if(this.restaurant.plats == undefined){
+      const plats = [newPlat];
+      this.restaurant.plats = plats;
+    } else {
+      const plats = this.restaurant.plats;
+      plats.push(newPlat);
+      this.restaurant.plats = plats;
+    }
+    this.restaurant.hasPlat = true;
+    this.restaurantService.updateRestaurant(this.restaurant, this.currentID);
+  }
+
+  throwInfos(restaurant: Restaurant, id: number){
+    this.restaurant = restaurant;
+    this.currentID = id;
   }
 
   detectFile(event){
