@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Restaurant } from '../models/Restaurant.model';
 import { ActivatedRoute } from '@angular/router';
 import { RestaurantsService } from '../services/restaurants.service';
+import { Plat } from '../models/Plat.model';
+import { PanierService } from '../services/panier.service';
 
 @Component({
   selector: 'app-restaurant-menu',
@@ -12,7 +14,7 @@ export class RestaurantMenuComponent implements OnInit {
 
   restaurant: Restaurant;
 
-  constructor(private route: ActivatedRoute, private restaurantsService: RestaurantsService) { }
+  constructor(private route: ActivatedRoute, private restaurantsService: RestaurantsService, private panierService: PanierService) { }
 
   ngOnInit() {
     this.restaurant = new Restaurant('','','','', '');
@@ -22,6 +24,12 @@ export class RestaurantMenuComponent implements OnInit {
         this.restaurant = restaurant; 
       }
     );
+  }
+
+  onAddingToCart(id: number){
+    const plat = this.restaurant.plats[id];
+    this.panierService.addToPanier(plat);
+    console.log("add: " + plat.nom);
   }
 
 }

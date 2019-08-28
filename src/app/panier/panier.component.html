@@ -1,0 +1,33 @@
+<head>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+</head>
+<body class="container">
+    <p *ngIf="!panier && valide == false">Panier vide !</p>
+    <p *ngIf="valide == true">Commande validé !</p>
+    <table class="table" *ngIf="panier">
+        <thead>
+            <tr>
+                <th>Plat</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Prix</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let plat of panier.plats">
+                <td>{{ plat.nom }}</td>
+                <td>{{ plat.type }}</td>
+                <td>{{ plat.description }}</td>
+                <td>{{ plat.prix }} <i class="fas fa-coins"></i></td>
+                <td>
+                    <button (click)="remove(plat)" class="btn btn-danger">Supprimer</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="row">
+        <h3>Prix total : {{ prixTotal }} <i class="fas fa-coins"></i></h3>
+        <button (click)="confirmerPanier()" class="btn btn-primary ml-auto">Confirmer</button>
+    </div>
+</body>

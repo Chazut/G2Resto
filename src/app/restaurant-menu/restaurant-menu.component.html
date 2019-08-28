@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="row">
-        <div *ngFor="let plat of restaurant.plats; let ii = index" class="col-12 shadow-sm p-4 mb-3 bg-white">
+        <div *ngFor="let plat of restaurant.plats; let i = index" class="col-12 shadow-sm p-4 mb-3 bg-white">
             <div class="row">
                 <div class="col-md-2">
                     <img [src]="plat.img" alt="Plat img" style="width:100px" *ngIf="plat.img">
@@ -25,7 +25,7 @@
                         <p class="font-weight-light pl-3">{{ plat.type }}</p>
                         <p class="font-weight-normal pl-3">{{ plat.nom }}</p>
                         <div class="ml-auto">
-                            <button class="btn btn-primary btn-lg m-1">{{ plat.prix }} <i class="fas fa-coins"></i></button>
+                            <button class="btn btn-primary btn-lg m-1" (click)="onAddingToCart(i)">{{ plat.prix }} <i class="fas fa-coins"></i></button>
                         </div>
                     </div>
                     <p class="font-weight-light">{{ plat.description }}</p>
