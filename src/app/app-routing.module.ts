@@ -6,6 +6,8 @@ import { AdminRestaurantsComponent } from './admin/admin-restaurants/admin-resta
 import { HomeComponent } from './home/home.component';
 import { RestaurantMenuComponent } from './restaurant-menu/restaurant-menu.component';
 import { PanierComponent } from './panier/panier.component';
+import { OrdersComponent } from './orders/orders.component';
+import { AllOrdersComponent } from './all-orders/all-orders.component';
 
 const routes: Routes = [
   { path: 'connexion', component: SigninComponent },
@@ -13,6 +15,8 @@ const routes: Routes = [
   { path : 'editRestaurants', component: AdminRestaurantsComponent },
   { path : 'restaurant/:id', component: RestaurantMenuComponent },
   { path : 'panier', component: PanierComponent },
+  { path : 'orders', component: OrdersComponent },
+  { path : 'allorders', component: AllOrdersComponent },
   { path : 'accueil', component: HomeComponent }
 ];
 

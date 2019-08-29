@@ -44,6 +44,13 @@ export class PanierService {
     this.emitPanier();
   }
 
+  getPaniers(){
+    firebase.database().ref('paniers').on('value', (data) =>{
+      this.paniers = data.val() ? data.val() : [];
+      this.emitPanier();
+    });
+  }
+
   getPanier(){
     return this.panier;
   }
@@ -54,9 +61,27 @@ export class PanierService {
   }
 
   savePanier(newPanier: Panier){
+    this.getPaniers();
     this.paniers.push(newPanier);
     this.panier = null;
     firebase.database().ref('/paniers').set(this.paniers);
+  }
+
+  updatePaniers(panier: Panier){
+    firebase.database().ref('/paniers').set(this.paniers);
+  }
+
+  setDone(panier: Panier){
+    const index = this.paniers.findIndex(
+      (panierElement) => {
+        if(panierElement == panier){
+          return true;
+        }
+      }
+    );
+    this.paniers[index].done = true;
+    this.emitPanier();
+    this.updatePaniers(panier);
   }
 
 }

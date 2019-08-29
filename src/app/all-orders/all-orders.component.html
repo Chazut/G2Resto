@@ -1,0 +1,36 @@
+<head>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.8/angular.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+</head>
+<body class="container">
+    <div *ngFor="let panier of paniers; let i = index" class="col-12 shadow-sm p-4 mb-3 bg-light border border-dark">
+        <p>Commande passée par "{{ panier.owner }}"</p>
+        <div *ngIf="!panier.done" class="bg-warning">
+            <p class="font-weight-bold ml-2">En cours de préparation</p>
+        </div>
+        <div *ngIf="panier.done" class="bg-primary">
+            <p class="font-weight-bold">Effectuée</p>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Plat</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let plat of panier.plats">
+                    <td>{{ plat.nom }}</td>
+                    <td>{{ plat.type }}</td>
+                    <td>{{ plat.description }}</td>
+                    <td>{{ plat.prix }} <i class="fas fa-coins"></i></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="row">
+            <button *ngIf="!panier.done" (click)="finaliserCommande(panier)" class="btn btn-primary ml-auto">Confirmer</button>
+        </div>
+    </div>
+</body>

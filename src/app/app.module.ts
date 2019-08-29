@@ -11,6 +11,8 @@ import { AdminRestaurantsComponent } from './admin/admin-restaurants/admin-resta
 import { HomeComponent } from './home/home.component';
 import { RestaurantMenuComponent } from './restaurant-menu/restaurant-menu.component';
 import { PanierComponent } from './panier/panier.component';
+import { OrdersComponent } from './orders/orders.component';
+import { AllOrdersComponent } from './all-orders/all-orders.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { PanierComponent } from './panier/panier.component';
     HomeComponent,
     RestaurantMenuComponent,
     PanierComponent,
+    OrdersComponent,
+    AllOrdersComponent,
   ],
   imports: [
     BrowserModule,

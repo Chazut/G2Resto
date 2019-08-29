@@ -3,6 +3,7 @@ import { Plat } from '../models/Plat.model';
 import { Panier } from '../models/Panier.model';
 import { PanierService } from '../services/panier.service';
 import { Subscription } from 'rxjs';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-panier',
@@ -42,6 +43,7 @@ export class PanierComponent implements OnInit {
   }
 
   confirmerPanier(){
+    this.panier.owner = firebase.auth().currentUser.email;
     this.panierService.savePanier(this.panier);
     this.panier = null;
     this.valide = true;

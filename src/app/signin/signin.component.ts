@@ -34,7 +34,7 @@ export class SigninComponent implements OnInit {
       () => {
         if(email == "admin@gmail.com"){
           this.router.navigate(['dashboard']);
-        } else { this.router.navigate(['']);}
+        } else { this.router.navigate(['accueil']);}
       },
       (error) => {
         alert(error);

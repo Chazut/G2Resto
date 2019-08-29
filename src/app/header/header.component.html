@@ -13,7 +13,7 @@
             <a class="nav-link text-white" routerLink="/panier">Panier</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" href="#">Mes commandes</a>
+            <a class="nav-link text-white" routerLink="/orders">Mes commandes</a>
         </li>
         <li *ngIf="loggedAsAdmin" class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -21,6 +21,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" routerLink="/dashboard">Tableau de bord</a>
+              <a class="dropdown-item" routerLink="/allorders">Voir les commandes</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" routerLink="/editRestaurants">Ajouter/Editer un restaurant</a>
               <a class="dropdown-item" href="#">Ajouter/Editer un plat</a>
@@ -31,7 +32,7 @@
         <form class="form-inline">
             <button *ngIf="logged==false" class="btn btn-light text-dark mr-sm-2" type="button" routerLink="/connexion">Connexion</button>
             <button *ngIf="logged" class="btn btn-light text-dark mr-sm-2" type="button" (click)="onSignout()" >Déconnexion</button>
-            <button *ngIf="logged==false" class="btn btn-light text-dark" type="button">Inscription</button>
+            <button *ngIf="logged==false" class="btn btn-light text-dark" type="button" disabled>Inscription</button>
         </form>
        </ul>
     </div>

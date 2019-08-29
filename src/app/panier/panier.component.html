@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 </head>
 <body class="container">
-    <p *ngIf="!panier && valide == false">Panier vide !</p>
+    <p *ngIf="!panier && valide == false">Le panier est vide ou vous n'êtes pas connecté</p>
     <p *ngIf="valide == true">Commande validé !</p>
     <table class="table" *ngIf="panier">
         <thead>

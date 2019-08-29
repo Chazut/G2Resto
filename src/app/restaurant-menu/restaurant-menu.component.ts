@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RestaurantsService } from '../services/restaurants.service';
 import { Plat } from '../models/Plat.model';
 import { PanierService } from '../services/panier.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-restaurant-menu',
@@ -27,9 +28,10 @@ export class RestaurantMenuComponent implements OnInit {
   }
 
   onAddingToCart(id: number){
-    const plat = this.restaurant.plats[id];
-    this.panierService.addToPanier(plat);
-    console.log("add: " + plat.nom);
+    if(firebase.auth().currentUser != null){
+      const plat = this.restaurant.plats[id];
+      this.panierService.addToPanier(plat);
+    }
   }
 
 }
