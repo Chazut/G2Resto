@@ -29,3 +29,9 @@ C'est une appplication Angular utilisant Firebase et Bootstrap.
 - Ajouter des plats aux restaurants
 - Listing de toutes les commandes
 - Valider des commandes
+
+## Evolutions possibles
+- Formulaire d'inscription
+- Ajout de menus
+- Ajout des montants totaux pour le suivi des commandes (et non uniquement dans le panier)
+- Ajout d'une map permettant de voir la localisation des restaurants
